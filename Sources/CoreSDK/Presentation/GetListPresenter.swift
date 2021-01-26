@@ -27,7 +27,7 @@ public class GetListPresenter<Request, Response, Interactor: UseCase>: Observabl
   public func getList(request: Request?) {
     isLoading = true
     if let useCase = _useCase {
-      _useCase.execute(request: request)
+      useCase.execute(request: request)
         .receive(on: RunLoop.main)
         .sink(receiveCompletion: { completion in
           switch completion {
