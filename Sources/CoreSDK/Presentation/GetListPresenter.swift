@@ -26,20 +26,26 @@ public class GetListPresenter<Request, Response, Interactor: UseCase>: Observabl
   
   public func getList(request: Request?) {
     isLoading = true
-    _useCase.execute(request: request)
-      .receive(on: RunLoop.main)
-      .sink(receiveCompletion: { completion in
-        switch completion {
-        case .failure(let error):
-          self.errorMessage = error.localizedDescription
-          self.isError = true
-          self.isLoading = false
-        case .finished:
-          self.isLoading = false
-        }
-      }, receiveValue: { list in
-        self.list = list
-      })
-      .store(in: &cancellables)
+    if let _useCase = self._useCase {
+      _useCase.execute(request: request)
+        .receive(on: RunLoop.main)
+        .sink(receiveCompletion: { completion in
+          switch completion {
+          case .failure(let error):
+            self.errorMessage = error.localizedDescription
+            self.isError = true
+            self.isLoading = false
+          case .finished:
+            self.isLoading = false
+          }
+        }, receiveValue: { list in
+          self.list = list
+        })
+        .store(in: &cancellables)
+    } else {
+      self.errorMessage = "Usecase has no value."
+      self.isError = true
+      self.isLoading = false
+    }
   }
 }
