@@ -14,5 +14,5 @@ public protocol LocalDataSource {
   
   func get() -> AnyPublisher<[Response], Error>
   func add(from entities: [Response]) -> AnyPublisher<Bool, Error>
-  func set(by id: Request) -> AnyPublisher<Response, Error>
+  func set(by id: Request?) -> AnyPublisher<Response, Error>
 }

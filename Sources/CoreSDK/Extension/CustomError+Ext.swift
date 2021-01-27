@@ -26,11 +26,13 @@ public enum URLError: LocalizedError {
 public enum DatabaseError: LocalizedError {
   
   case invalidInstance
+  case invalidParameter
   case requestFailed
   
   public var errorDescription: String? {
     switch self {
     case .invalidInstance: return "Database can't instance."
+    case .invalidParameter: return "Request is invalid."
     case .requestFailed: return "Your request failed."
     }
   }
